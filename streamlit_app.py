@@ -23,7 +23,7 @@ st.markdown("""---""")
 data = pd.read_excel('IKN-Januari-Oktober-praprocessing-label.xlsx')
 
 # mengubah nilai kolom dan menghapus sentimen yang kosong
-mapping = {1: 'Positif', 0: 'Negatif'}
+mapping = {1: 'Positif', 2: 'Negatif'}
 df = data.dropna(subset=['Sentimen'])
 df = df.loc[df['Sentimen'] != 3]
 df['Sentimen'] = df['Sentimen'].map(mapping)
