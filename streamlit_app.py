@@ -12,18 +12,18 @@ import seaborn as sns
 
 
 st.set_page_config(
-    page_title="Dashboard Sentimen Analisis Pemindahan Ibu Kota Negara ke Ibu kota Nusantara",
-    page_icon=":eyes:",
+    page_title="Analisis Sentimen Tokoh Publik Purbaya",
+    page_icon=":chart:",
     layout="wide",  # Use "wide" layout for a full-size dashboard
 )
 
-st.header('Sentimen Analisis Pemindahan Ibu Kota Negara ke Ibu Kota Nusantara')
+st.header('Analisis Sentimen Tokoh Publik Purbaya')
 st.markdown("""---""")
 
 data = pd.read_excel('IKN-Januari-Oktober-praprocessing-label.xlsx')
 
 # mengubah nilai kolom dan menghapus sentimen yang kosong
-mapping = {1: 'Positif', 2: 'Negatif'}
+mapping = {1: 'Positif', 0: 'Negatif'}
 df = data.dropna(subset=['Sentimen'])
 df = df.loc[df['Sentimen'] != 3]
 df['Sentimen'] = df['Sentimen'].map(mapping)
