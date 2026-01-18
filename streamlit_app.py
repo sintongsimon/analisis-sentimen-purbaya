@@ -40,11 +40,7 @@ with nav1:
     df['created_at'] = pd.to_datetime(df['created_at']).dt.date
     start = df['created_at'].min()
     finish = df['created_at'].max()
-    start_date, end_date = st.date_input('Range Time',
-                               (start, finish), 
-                               start, 
-                               finish,
-                               format="dd MM yyyy")
+    start_date, end_date = st.date_input('Range Time', (start, finish), start, finish, format="DD MM YYYY")
 with nav2:
     jenis_sentimen = st.multiselect("Category", options = df["Sentimen"].unique(), default = df["Sentimen"].unique())
 
