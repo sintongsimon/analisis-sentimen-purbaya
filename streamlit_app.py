@@ -37,16 +37,16 @@ df = df.drop_duplicates(subset=['Stemming'])
 
 nav1, nav2 = st.columns(2)
 with nav1:
-    jenis_sentimen = st.multiselect("Jenis Sentimen", options = df["Sentimen"].unique(), default = df["Sentimen"].unique())
-with nav2:
     df['created_at'] = pd.to_datetime(df['created_at']).dt.date
     start = df['created_at'].min()
     finish = df['created_at'].max()
-    start_date, end_date = st.date_input('Rentang Waktu',
+    start_date, end_date = st.date_input('Range Time',
                                (start, finish), 
                                start, 
                                finish,
-                               format="YYYY.MM.DD")
+                               format="dd MM yyyy")
+with nav2:
+    jenis_sentimen = st.multiselect("Category", options = df["Sentimen"].unique(), default = df["Sentimen"].unique())
 
 # filter Tgl
 output = (df['created_at'] >= start_date) & (df['created_at'] <= end_date)
