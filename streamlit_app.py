@@ -64,8 +64,10 @@ output = (df['created_at'] >= start_date) & (df['created_at'] <= end_date)
 df_selection = df.query("Sentimen == @jenis_sentimen").loc[output]
 
 # Insert containers separated into tabs:
-tab1, tab2 = st.tabs(["Ringkasan", "Dataset"])
+tab1, tab2 = st.tabs(["Data", "Summary"])
 with tab1:
+    df_selection
+with tab2:
     pos = df_selection['Sentimen'].loc[df_selection['Sentimen'] == 'Positif']
     neg = df_selection['Sentimen'].loc[df_selection['Sentimen'] == 'Negatif']
     count = len(df_selection)
@@ -77,9 +79,6 @@ with tab1:
 
     # garis 
     st.markdown("""---""")
-    
-with tab2:
-    df_selection
 
 nav3, nav4 = st.columns(2)
 with nav3:
