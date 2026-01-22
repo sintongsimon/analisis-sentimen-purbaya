@@ -134,6 +134,21 @@ def print_metrics(y_test, y_pred, fold, title_suffix):
     
     with st.expander("Lihat Classification Report"):
         st.text(classification_report(y_test, y_pred))
+        metrics_df = pd.DataFrame({
+            "Metric": ["Accuracy", "Precision", "Recall", "F1"],
+            "Score": [accuracy, precision, recall, f1]
+        })
+        
+        fig = px.bar(
+            metrics_df,
+            x="Metric",
+            y="Score",
+            title="Evaluasi Kinerja",
+            text="Score",
+            color="Metric"
+        )
+        fig.update_layout(yaxis_range=[0,1])
+        st.plotly_chart(fig, use_container_width=True)
 
     plt.figure(figsize=(4, 3))
     sns.heatmap(
