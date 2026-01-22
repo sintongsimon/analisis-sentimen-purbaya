@@ -122,27 +122,31 @@ splits = list(kf.split(X))
 def print_metrics(y_test, y_pred, fold, title_suffix):
     cm = confusion_matrix(y_test, y_pred)
     accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, average='weighted')
-    recall = recall_score(y_test, y_pred, average='weighted')
-    f1 = f1_score(y_test, y_pred, average='weighted')
+    precision = precision_score(y_test, y_pred, average="weighted")
+    recall = recall_score(y_test, y_pred, average="weighted")
+    f1 = f1_score(y_test, y_pred, average="weighted")
+    
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("Accuracy", f"{accuracy:.3f}")
+    m2.metric("Precision", f"{precision:.3f}")
+    m3.metric("Recall", f"{recall:.3f}")
+    m4.metric("F1-Score", f"{f1:.3f}")
+    
+    with st.expander("Lihat Classification Report"):
+        st.text(classification_report(y_test, y_pred))
 
-    st.markdown(f"### Confusion Matrix Fold {fold}")
-    st.write(f"**Accuracy:** {accuracy:.4f}")
-    st.write(f"**Precision:** {precision:.4f}")
-    st.write(f"**Recall:** {recall:.4f}")
-    st.write(f"**F1-Score:** {f1:.4f}")
-
-    st.write("**Classification Report:**")
-    st.text(classification_report(y_test, y_pred))
-
-    plt.figure(figsize=(2, 1.5))  # Reduce figure size further
-    sns.heatmap(cm, annot=True, fmt='d', cmap='viridis', xticklabels=['Negative', 'Positive'], yticklabels=['Negative', 'Positive'],
-                annot_kws={"size": 6}, cbar_kws={"shrink": .5})  # Adjust text and color bar size
-    plt.title(f'Confusion Matrix Fold {fold} - {title_suffix}', fontsize=8)
-    plt.xlabel('Predicted label', fontsize=6)
-    plt.ylabel('True label', fontsize=6)
-    plt.xticks(fontsize=5)
-    plt.yticks(fontsize=5)
+    plt.figure(figsize=(4, 3))
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt="d",
+        cmap="Blues",
+        xticklabels=["Negative", "Positive"],
+        yticklabels=["Negative", "Positive"]
+    )
+    plt.xlabel("Predicted Label")
+    plt.ylabel("True Label")
+    plt.title(f"Confusion Matrix - Fold {fold_choice}")
     st.pyplot(plt)
 
 # Tabs for TF, TF-IDF, IndoBERTweet
