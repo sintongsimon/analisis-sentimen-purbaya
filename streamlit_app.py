@@ -1,15 +1,19 @@
 import streamlit as st
 import pandas as pd
+import torch
+from transformers import BertTokenizer, BertForSequenceClassification
+
+import streamlit as st
+import pandas as pd
 import plotly.graph_objects as go
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import plotly.express as px
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import LinearSVC
 from sklearn.model_selection import cross_val_score, KFold, train_test_split
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, precision_score, recall_score, f1_score
 import seaborn as sns
-
 
 st.set_page_config(
     page_title="Analisis Sentimen Tokoh Publik Purbaya",
@@ -114,7 +118,7 @@ y = df['Sentimen']
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
 
 # Model definition
-model = MultinomialNB()
+model = LinearSVC()
 
 # Splitting data once for all folds
 splits = list(kf.split(X))
@@ -146,8 +150,8 @@ def print_metrics(y_test, y_pred, fold, title_suffix):
     plt.yticks(fontsize=5)
     st.pyplot(plt)
 
-# Tabs for TF and TF-IDF
-tab1, tab2 = st.tabs(["TF", "TF-IDF"])
+# Tabs for TF, TF-IDF, IndoBERTweet
+tab1, tab2, tab3 = st.tabs(["TF", "TF-IDF", "IndoBERTweet"])
 
 with tab1:
     st.write("TF")
@@ -180,3 +184,26 @@ with tab2:
     y_pred = model.predict(X_test)
 
     print_metrics(y_test, y_pred, fold, "TF-IDF")
+
+with tab3:
+    st.write("IndoBERTweet")
+
+    fold_choice = st.selectbox(
+        "Pilih K-fold",
+        [1, 2, 3, 4, 5]
+    )
+
+    # Load hasil fold
+    file_path = f"results/indobertweet_fold_{fold_choice}_predictions.csv"
+    df_fold = pd.read_csv(file_path)
+
+    y_test = df_fold["y_true"]
+    y_pred = df_fold["y_pred"]
+
+    print_metrics(
+        y_test,
+        y_pred,
+        fold_choice,
+        "IndoBERTweet"
+    )
+
