@@ -10,6 +10,20 @@ from sklearn.model_selection import cross_val_score, KFold, train_test_split
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, precision_score, recall_score, f1_score
 import seaborn as sns
 
+st.markdown("""
+<style>
+.stButton>button {
+    background-color: #1E88E5;
+    color: white;
+    border-radius: 8px;
+}
+.stDateInput input {
+    border-radius: 6px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 st.set_page_config(
     page_title="Analisis Sentimen Tokoh Publik Purbaya",
     page_icon=":chart:",
