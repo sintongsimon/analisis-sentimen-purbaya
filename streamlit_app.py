@@ -1,10 +1,5 @@
 import streamlit as st
 import pandas as pd
-import torch
-from transformers import BertTokenizer, BertForSequenceClassification
-
-import streamlit as st
-import pandas as pd
 import plotly.graph_objects as go
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
