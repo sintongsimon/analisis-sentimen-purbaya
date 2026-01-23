@@ -181,11 +181,14 @@ def print_metrics(y_test, y_pred, fold, title_suffix):
 tab1, tab2, tab3 = st.tabs(["TF", "TF-IDF", "IndoBERTweet"])
 
 with tab1:
-    st.write("TF")
     countVectorizer = CountVectorizer()
     tf = countVectorizer.fit_transform(X).toarray()
 
-    fold_choice = st.selectbox("Pilih K-fold untuk TF", [1, 2, 3, 4, 5])
+    fold_choice = st.selectbox(
+        "Pilih K-fold",
+        [1, 2, 3, 4, 5]
+    )
+    
     fold = fold_choice
     train_index, test_index = splits[fold - 1]
     X_train, X_test = tf[train_index], tf[test_index]
@@ -197,11 +200,14 @@ with tab1:
     print_metrics(y_test, y_pred, fold, "Count Vectorizer (TF)")
 
 with tab2:
-    st.write("TF-IDF")
     tfidfVectorizer = TfidfVectorizer(use_idf=True, smooth_idf=True)
     tfidf = tfidfVectorizer.fit_transform(X).toarray()
 
-    fold_choice = st.selectbox("Pilih K-fold untuk TF-IDF", [1, 2, 3, 4, 5])
+    fold_choice = st.selectbox(
+        "Pilih K-fold",
+        [1, 2, 3, 4, 5]
+    )
+    
     fold = fold_choice
     train_index, test_index = splits[fold - 1]
     X_train, X_test = tfidf[train_index], tfidf[test_index]
@@ -213,8 +219,6 @@ with tab2:
     print_metrics(y_test, y_pred, fold, "TF-IDF")
 
 with tab3:
-    st.write("IndoBERTweet")
-
     fold_choice = st.selectbox(
         "Pilih K-fold",
         [1, 2, 3, 4, 5]
