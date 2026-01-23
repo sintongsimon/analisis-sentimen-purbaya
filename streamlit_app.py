@@ -50,15 +50,15 @@ df = df.drop_duplicates(subset=['CleanSVM'])
 
 nav1, nav2 = st.columns(2)
 with nav1:
-    df['created_at'] = pd.to_datetime(df['created_at']).dt.date
-    start = df['created_at'].min()
-    finish = df['created_at'].max()
+    df['date'] = pd.to_datetime(df['date']).dt.date
+    start = df['date'].min()
+    finish = df['date'].max()
     start_date, end_date = st.date_input('Range Time', (start, finish), start, finish, format="DD/MM/YYYY")
 with nav2:
     jenis_sentimen = st.multiselect("Category", options = df["Label"].unique(), default = df["Label"].unique())
 
 # filter Tgl
-output = (df['created_at'] >= start_date) & (df['created_at'] <= end_date)
+output = (df['date'] >= start_date) & (df['date'] <= end_date)
 
 # filter sumber, tamggal dan sentiment
 df_selection = df.query("Label == @jenis_sentimen").loc[output]
@@ -110,10 +110,10 @@ with nav3:
 
 
 with nav4:
-    tgl_counts = df_selection['created_at'].value_counts().reset_index()
-    tgl_counts.columns = ['created_at', 'Count']
+    tgl_counts = df_selection['date'].value_counts().reset_index()
+    tgl_counts.columns = ['date', 'Count']
     custom_colors = ['#dc6e55']
-    fig_tgl = px.area(tgl_counts, x='created_at', y='Count', title="Rentang Waktu Komentar", color_discrete_sequence=custom_colors)
+    fig_tgl = px.area(tgl_counts, x='date', y='Count', title="Rentang Waktu Komentar", color_discrete_sequence=custom_colors)
     st.plotly_chart(fig_tgl, use_container_width=True)
 
 st.markdown("""---""")
