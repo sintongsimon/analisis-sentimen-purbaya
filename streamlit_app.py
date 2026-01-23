@@ -83,31 +83,48 @@ with tab2:
 nav3, nav4 = st.columns(2)
 with nav3:
     # Visualisasi hasil sentiment
-    color_custom = ['#1B9E77', '#D95F02']
-    Sentimen = df_selection['Label'].value_counts()
-    fig_sentiment = go.Figure()
+    sentiment_counts = df_selection['Label'].value_counts()
 
-    neg_df = df_selection[df_selection['Label'] == 'Negative']
-    pos_df = df_selection[df_selection['Label'] == 'Positive']
-        
-    if not neg_df.empty:
-        color = ['#e14b32']
-        fig_sentiment.add_trace(go.Pie(labels=['Negative'], values=neg_df['Label'].value_counts(), 
-                                        marker_colors=color, textinfo='label+percent', 
-                                        hoverinfo='label+value', hole=0.3))
-    if not pos_df.empty:
-        color = ['#3ca9ee']
-        fig_sentiment.add_trace(go.Pie(labels=['Positive'], values=pos_df['Label'].value_counts(), 
-                                        marker_colors=color, textinfo='label+percent', 
-                                        hoverinfo='value', hole=0.3))
-    if not neg_df.empty and not pos_df.empty:
-        fig_sentiment.add_trace(go.Pie(labels=['Positive', 'Negative'], values=Sentimen,
-                                      marker_colors=color_custom, textinfo='label+percent',
-                                      hoverinfo='value', hole=0.3))
-        
-    fig_sentiment.update_layout(title="Persentase Sentimen Twitter")
+    color_map = {
+        "Positive": "#2E7D32",  # deep green
+        "Negative": "#C62828"   # deep red
+    }
+    
+    fig_sentiment = go.Figure(
+        data=[
+            go.Pie(
+                labels=sentiment_counts.index,
+                values=sentiment_counts.values,
+                hole=0.45,
+                marker=dict(
+                    colors=[color_map[label] for label in sentiment_counts.index],
+                    line=dict(color="#FFFFFF", width=2)
+                ),
+                textinfo="percent",
+                hovertemplate="<b>%{label}</b><br>Jumlah: %{value}<br>Persentase: %{percent}<extra></extra>"
+            )
+        ]
+    )
+    
+    fig_sentiment.update_layout(
+        title={
+            "text": "Distribusi Sentimen Opini Publik",
+            "x": 0.5,
+            "xanchor": "center",
+            "font": dict(size=18)
+        },
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=-0.15,
+            xanchor="center",
+            x=0.5
+        ),
+        margin=dict(t=60, b=40, l=40, r=40),
+        height=380
+    )
+    
     st.plotly_chart(fig_sentiment, use_container_width=True)
-
 
 with nav4:
     tgl_counts = df_selection['date'].value_counts().reset_index()
