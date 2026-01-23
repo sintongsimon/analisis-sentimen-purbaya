@@ -184,10 +184,7 @@ with tab1:
     countVectorizer = CountVectorizer()
     tf = countVectorizer.fit_transform(X).toarray()
 
-    fold_choice = st.selectbox(
-        "Pilih K-fold",
-        [1, 2, 3, 4, 5]
-    )
+    fold_choice = st.selectbox("Pilih K-fold", [1, 2, 3, 4, 5])
     
     fold = fold_choice
     train_index, test_index = splits[fold - 1]
@@ -203,7 +200,7 @@ with tab2:
     tfidfVectorizer = TfidfVectorizer(use_idf=True, smooth_idf=True)
     tfidf = tfidfVectorizer.fit_transform(X).toarray()
 
-    fold_choice = st.selectbox("Pilih K-fold untuk TF-IDF", [1, 2, 3, 4, 5])
+    fold_choice = st.selectbox("Pilih K-fold", [1, 2, 3, 4, 5])
     
     fold = fold_choice
     train_index, test_index = splits[fold - 1]
@@ -216,10 +213,7 @@ with tab2:
     print_metrics(y_test, y_pred, fold, "TF-IDF")
 
 with tab3:
-    fold_choice = st.selectbox(
-        "Pilih K-fold",
-        [1, 2, 3, 4, 5]
-    )
+    fold_choice = st.selectbox("Pilih K-fold", [1, 2, 3, 4, 5])
 
     # Load hasil fold
     file_path = f"results/indobertweet_fold_{fold_choice}_predictions.csv"
