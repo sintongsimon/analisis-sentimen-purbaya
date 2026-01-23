@@ -73,8 +73,8 @@ with tab2:
     count = len(df_selection)
     
     b1, b2, b3 = st.columns([0.45,0.45,0.45])
-    b1.metric("Jumlah Komentar", len(pos), "+ Positive")
-    b2.metric("Jumlah Komentar", len(neg), "- Negative")
+    b1.metric("", len(pos), "+ Positive")
+    b2.metric("", len(neg), "- Negative")
     b3.metric("Jumlah", count)
 
     # garis 
@@ -101,7 +101,7 @@ with nav3:
                                         marker_colors=color, textinfo='label+percent', 
                                         hoverinfo='value', hole=0.3))
     if not neg_df.empty and not pos_df.empty:
-        fig_sentiment.add_trace(go.Pie(labels=['Negative','Positive'], values=Sentimen,
+        fig_sentiment.add_trace(go.Pie(labels=['Positive', 'Negative'], values=Label,
                                       marker_colors=color_custom, textinfo='label+percent',
                                       hoverinfo='value', hole=0.3))
         
