@@ -108,7 +108,7 @@ with nav3:
     
     fig_sentiment.update_layout(
         title={
-            "text": "Distribusi Sentimen Opini Publik",
+            "text": "Tweet Category",
             "x": 0.5,
             "xanchor": "center",
             "font": dict(size=18)
@@ -129,8 +129,34 @@ with nav3:
 with nav4:
     tgl_counts = df_selection['date'].value_counts().reset_index()
     tgl_counts.columns = ['date', 'Count']
-    custom_colors = ['#dc6e55']
-    fig_tgl = px.area(tgl_counts, x='date', y='Count', title="Rentang Waktu Komentar", color_discrete_sequence=custom_colors)
+    
+    # Urutkan berdasarkan tanggal (PENTING supaya tidak acak)
+    tgl_counts['date'] = pd.to_datetime(tgl_counts['date'])
+    tgl_counts = tgl_counts.sort_values('date')
+    
+    custom_colors = ['#1E88E5']  # professional blue
+    
+    fig_tgl = px.bar(
+        tgl_counts,
+        x='date',
+        y='Count',
+        title="Tweet Range",
+        color_discrete_sequence=custom_colors
+    )
+    
+    fig_tgl.update_layout(
+        xaxis_title="Tanggal",
+        yaxis_title="Jumlah Tweet",
+        title_x=0.5,
+        bargap=0.25,
+        height=380,
+        margin=dict(t=60, b=40, l=40, r=40)
+    )
+    
+    fig_tgl.update_traces(
+        hovertemplate="Tanggal: %{x|%d %b %Y}<br>Jumlah Tweet: %{y}<extra></extra>"
+    )
+    
     st.plotly_chart(fig_tgl, use_container_width=True)
 
 st.markdown("""---""")
