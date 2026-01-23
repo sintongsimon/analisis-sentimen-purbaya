@@ -25,12 +25,12 @@ st.markdown("""
 
 
 st.set_page_config(
-    page_title="Analisis Sentimen Tokoh Publik Purbaya",
+    page_title="Analisis Sentimen Tokoh Publik Purbaya di Media Sosial X",
     page_icon=":chart:",
     layout="wide",  # Use "wide" layout for a full-size dashboard
 )
 
-st.header('Analisis Sentimen Tokoh Publik Purbaya Sosial Media X')
+st.header('Analisis Sentimen Tokoh Publik Purbaya di Media Sosial X')
 st.markdown("""---""")
 
 data = pd.read_excel('labeled_tweets_merged_2025-09-08_to_2025-12-31.xlsx')
