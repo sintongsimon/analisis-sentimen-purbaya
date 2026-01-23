@@ -33,20 +33,20 @@ st.set_page_config(
 st.header('Analisis Sentimen Tokoh Publik Purbaya')
 st.markdown("""---""")
 
-data = pd.read_excel('IKN-Januari-Oktober-praprocessing-label.xlsx')
+data = pd.read_excel('labeled_tweets_merged_2025-09-08_to_2025-12-31.csv')
 
 # mengubah nilai kolom dan menghapus sentimen yang kosong
 mapping = {1: 'Positive', 2: 'Negative'}
-df = data.dropna(subset=['Sentimen'])
-df = df.loc[df['Sentimen'] != 3]
-df['Sentimen'] = df['Sentimen'].map(mapping)
+df = data.dropna(subset=['Label'])
+df = df.loc[df['Label'] != 3]
+df['Label'] = df['Label'].map(mapping)
 
 # mengurutkan nomer index
 df = df.reset_index(drop=True)
 df.index = df.index + 1
 
 # menghapus data duplikat
-df = df.drop_duplicates(subset=['Stemming'])
+df = df.drop_duplicates(subset=['CleanSVM'])
 
 nav1, nav2 = st.columns(2)
 with nav1:
@@ -55,21 +55,21 @@ with nav1:
     finish = df['created_at'].max()
     start_date, end_date = st.date_input('Range Time', (start, finish), start, finish, format="DD/MM/YYYY")
 with nav2:
-    jenis_sentimen = st.multiselect("Category", options = df["Sentimen"].unique(), default = df["Sentimen"].unique())
+    jenis_sentimen = st.multiselect("Category", options = df["Label"].unique(), default = df["Label"].unique())
 
 # filter Tgl
 output = (df['created_at'] >= start_date) & (df['created_at'] <= end_date)
 
 # filter sumber, tamggal dan sentiment
-df_selection = df.query("Sentimen == @jenis_sentimen").loc[output]
+df_selection = df.query("Label == @jenis_sentimen").loc[output]
 
 # Insert containers separated into tabs:
 tab1, tab2 = st.tabs(["Data", "Summary"])
 with tab1:
     df_selection
 with tab2:
-    pos = df_selection['Sentimen'].loc[df_selection['Sentimen'] == 'Positif']
-    neg = df_selection['Sentimen'].loc[df_selection['Sentimen'] == 'Negatif']
+    pos = df_selection['Label'].loc[df_selection['Label'] == 'Positif']
+    neg = df_selection['Label'].loc[df_selection['Label'] == 'Negatif']
     count = len(df_selection)
     
     b1, b2, b3 = st.columns([0.45,0.45,0.45])
@@ -84,20 +84,20 @@ nav3, nav4 = st.columns(2)
 with nav3:
     # Visualisasi hasil sentiment
     color_custom = ['#e14b32', '#3ca9ee']
-    Sentimen = df_selection['Sentimen'].value_counts()
+    Sentimen = df_selection['Label'].value_counts()
     fig_sentiment = go.Figure()
 
-    neg_df = df_selection[df_selection['Sentimen'] == 'Negatif']
-    pos_df = df_selection[df_selection['Sentimen'] == 'Positif']
+    neg_df = df_selection[df_selection['Label'] == 'Negatif']
+    pos_df = df_selection[df_selection['Label'] == 'Positif']
         
     if not neg_df.empty:
         color = ['#e14b32']
-        fig_sentiment.add_trace(go.Pie(labels=['Negatif'], values=neg_df['Sentimen'].value_counts(), 
+        fig_sentiment.add_trace(go.Pie(labels=['Negatif'], values=neg_df['Label'].value_counts(), 
                                         marker_colors=color, textinfo='label+percent', 
                                         hoverinfo='label+value', hole=0.3))
     if not pos_df.empty:
         color = ['#3ca9ee']
-        fig_sentiment.add_trace(go.Pie(labels=['Positif'], values=pos_df['Sentimen'].value_counts(), 
+        fig_sentiment.add_trace(go.Pie(labels=['Positif'], values=pos_df['Label'].value_counts(), 
                                         marker_colors=color, textinfo='label+percent', 
                                         hoverinfo='value', hole=0.3))
     if not neg_df.empty and not pos_df.empty:
@@ -119,8 +119,8 @@ with nav4:
 st.markdown("""---""")
 
 # Prepare data
-X = df['Stemming']
-y = df['Sentimen']
+X = df['CleanSVM']
+y = df['Label']
 
 # Define KFold cross-validation with fixed 5 splits
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
