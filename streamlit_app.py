@@ -83,7 +83,7 @@ with tab2:
 nav3, nav4 = st.columns(2)
 with nav3:
     # Visualisasi hasil sentiment
-    color_custom = ['#e14b32', '#3ca9ee']
+    color_custom = ['#1B9E77', '#D95F02']
     Sentimen = df_selection['Label'].value_counts()
     fig_sentiment = go.Figure()
 
