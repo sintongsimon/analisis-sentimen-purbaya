@@ -68,13 +68,13 @@ tab1, tab2 = st.tabs(["Data", "Summary"])
 with tab1:
     df_selection
 with tab2:
-    pos = df_selection['Label'].loc[df_selection['Label'] == 'Positif']
-    neg = df_selection['Label'].loc[df_selection['Label'] == 'Negatif']
+    pos = df_selection['Label'].loc[df_selection['Label'] == 'Positive']
+    neg = df_selection['Label'].loc[df_selection['Label'] == 'Negative']
     count = len(df_selection)
     
     b1, b2, b3 = st.columns([0.45,0.45,0.45])
-    b1.metric("Jumlah Komentar", len(pos), "+ Positif")
-    b2.metric("Jumlah Komentar", len(neg), "- Negatif")
+    b1.metric("Jumlah Komentar", len(pos), "+ Positive")
+    b2.metric("Jumlah Komentar", len(neg), "- Negative")
     b3.metric("Jumlah", count)
 
     # garis 
@@ -87,21 +87,21 @@ with nav3:
     Sentimen = df_selection['Label'].value_counts()
     fig_sentiment = go.Figure()
 
-    neg_df = df_selection[df_selection['Label'] == 'Negatif']
-    pos_df = df_selection[df_selection['Label'] == 'Positif']
+    neg_df = df_selection[df_selection['Label'] == 'Negative']
+    pos_df = df_selection[df_selection['Label'] == 'Positive']
         
     if not neg_df.empty:
         color = ['#e14b32']
-        fig_sentiment.add_trace(go.Pie(labels=['Negatif'], values=neg_df['Label'].value_counts(), 
+        fig_sentiment.add_trace(go.Pie(labels=['Negative'], values=neg_df['Label'].value_counts(), 
                                         marker_colors=color, textinfo='label+percent', 
                                         hoverinfo='label+value', hole=0.3))
     if not pos_df.empty:
         color = ['#3ca9ee']
-        fig_sentiment.add_trace(go.Pie(labels=['Positif'], values=pos_df['Label'].value_counts(), 
+        fig_sentiment.add_trace(go.Pie(labels=['Positive'], values=pos_df['Label'].value_counts(), 
                                         marker_colors=color, textinfo='label+percent', 
                                         hoverinfo='value', hole=0.3))
     if not neg_df.empty and not pos_df.empty:
-        fig_sentiment.add_trace(go.Pie(labels=['Negatif','Positif'], values=Sentimen,
+        fig_sentiment.add_trace(go.Pie(labels=['Negative','Positive'], values=Sentimen,
                                       marker_colors=color_custom, textinfo='label+percent',
                                       hoverinfo='value', hole=0.3))
         
