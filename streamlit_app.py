@@ -30,7 +30,7 @@ st.set_page_config(
     layout="wide",  # Use "wide" layout for a full-size dashboard
 )
 
-st.header('Analisis Sentimen Tokoh Publik Purbaya')
+st.header('Analisis Sentimen Tokoh Publik Purbaya Sosial Media X')
 st.markdown("""---""")
 
 data = pd.read_excel('labeled_tweets_merged_2025-09-08_to_2025-12-31.xlsx')
