@@ -70,63 +70,27 @@ if "page" not in st.session_state:
     st.session_state.page = 1
 
 with tab1:
-    st.subheader("📄 Data Tweet")
-
-    # =============================
-    # SEARCH
-    # =============================
-    search_query = st.text_input("🔍 Cari (teks / label / tanggal)", "")
-
-    if search_query:
-        df_filtered = df_selection[
-            df_selection.astype(str)
-            .apply(lambda row: row.str.contains(search_query, case=False).any(), axis=1)
-        ]
-    else:
-        df_filtered = df_selection.copy()
-
-    # =============================
-    # SORTING
-    # =============================
-    sort_col = st.selectbox("Urutkan berdasarkan", df_filtered.columns)
-    sort_order = st.radio("Urutan", ["Ascending", "Descending"], horizontal=True)
-
-    df_filtered = df_filtered.sort_values(
-        by=sort_col,
-        ascending=(sort_order == "Ascending")
-    )
-
-    # =============================
-    # ROWS PER PAGE
-    # =============================
-    rows_per_page = st.selectbox("Baris per halaman", [5, 10, 25, 50], index=1)
 
     total_rows = len(df_filtered)
     total_pages = max(1, (total_rows + rows_per_page - 1) // rows_per_page)
-
-    # =============================
-    # PAGINATION CONTROLS
-    # =============================
-    col1, col2, col3, col4, col5 = st.columns([1,1,2,1,1])
-
+    
+    col0, col1, col2, col3, col4, col5 = st.columns([1, 1,1,2,1,1])
+    with col0:
+        rows_per_page = st.selectbox("Baris per halaman", [5, 10, 25, 50], index=1)
     with col1:
         if st.button("⏮ First"):
             st.session_state.page = 1
-
     with col2:
         if st.button("◀ Prev") and st.session_state.page > 1:
             st.session_state.page -= 1
-
     with col3:
         st.markdown(
             f"<h5 style='text-align:center'>Page {st.session_state.page} of {total_pages}</h5>",
             unsafe_allow_html=True
         )
-
     with col4:
         if st.button("Next ▶") and st.session_state.page < total_pages:
             st.session_state.page += 1
-
     with col5:
         if st.button("Last ⏭"):
             st.session_state.page = total_pages
