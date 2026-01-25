@@ -103,7 +103,7 @@ with tab1:
         height=400
     )
 
-    col0, col1a, col1b, col2a, col2b, col3, col4, col5, col6, col7 = st.columns([2,1,0.8,0.5,0.8,0.8,0.8,1.5,0.8,0.8])
+    col0, col1a, col1b, col2a, col2b, col3, col4, col5, col6, col7 = st.columns([2,1,0.8,0.5,0.8,0.5,0.5,1.5,0.5,0.5])
     with col0:
         st.markdown(f"**Display {start_idx + 1}–{min(end_idx, total_rows)} of {total_rows} data**")
     with col1a:
@@ -125,10 +125,10 @@ with tab1:
             label_visibility="collapsed"
         )
     with col3:
-        if st.button("⏮ First"):
+        if st.button("⏮"):
             st.session_state.page = 1
     with col4:
-        if st.button("◀ Prev") and st.session_state.page > 1:
+        if st.button("◀") and st.session_state.page > 1:
             st.session_state.page -= 1
     with col5:
         st.markdown(
@@ -136,10 +136,10 @@ with tab1:
             unsafe_allow_html=True
         )
     with col6:
-        if st.button("Next ▶") and st.session_state.page < total_pages:
+        if st.button("▶") and st.session_state.page < total_pages:
             st.session_state.page += 1
     with col7:
-        if st.button("Last ⏭"):
+        if st.button("⏭"):
             st.session_state.page = total_pages
 with tab2:
     pos = df_selection['Label'].loc[df_selection['Label'] == 'Positive']
