@@ -69,6 +69,9 @@ tab1, tab2 = st.tabs(["Data", "Summary"])
 if "page" not in st.session_state:
     st.session_state.page = 1
 
+if "rows_per_page" not in st.session_state:
+    st.session_state.rows_per_page = 10
+
 with tab1:
     rows_per_page = 10
     total_rows = len(df_selection)
@@ -98,12 +101,16 @@ with tab1:
     with col1:
         st.markdown("**Rows per page**")
     with col2:
-        rows_per_page = st.selectbox(
-            "Rows per page",
+        new_rows = st.selectbox(
+            "",
             [5, 10, 25, 50],
-            index=1,
+            index=[5,10,25,50].index(st.session_state.rows_per_page),
             label_visibility="collapsed"
         )
+    
+        if new_rows != st.session_state.rows_per_page:
+            st.session_state.rows_per_page = new_rows
+            st.session_state.page = 1  # RESET page
     with col3:
         if st.button("⏮ First"):
             st.session_state.page = 1
