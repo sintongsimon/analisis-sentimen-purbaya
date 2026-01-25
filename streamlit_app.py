@@ -70,10 +70,10 @@ with tab1:
     rows_per_page = 10
     total_rows = df_selection.shape[0]
     total_pages = (total_rows // rows_per_page) + (1 if total_rows % rows_per_page > 0 else 0)
+    page = 1
 
     start_idx = (page - 1) * rows_per_page
     end_idx = start_idx + rows_per_page
-    page = 1
     df_page = df_selection.iloc[start_idx:end_idx]
 
     st.dataframe(
