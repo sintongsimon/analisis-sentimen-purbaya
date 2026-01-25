@@ -107,9 +107,10 @@ with tab1:
         st.markdown("**Rows per page**")
     with col2:
         st.selectbox(
-            "Rows per page",
+            "",
             [5, 10, 25, 50],
-            key="rows_per_page"
+            key="rows_per_page",
+            label_visibility="collapsed"
         )
     with col3:
         if st.button("⏮ First"):
