@@ -146,7 +146,7 @@ with tab1:
     st.dataframe(
         df_page,
         use_container_width=True,
-        height=420
+        height=400
     )
 
     st.caption(
