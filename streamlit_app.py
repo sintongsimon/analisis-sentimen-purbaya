@@ -27,7 +27,7 @@ st.markdown("""
 st.set_page_config(
     page_title="Analisis Sentimen Tokoh Publik Purbaya di Media Sosial X",
     page_icon=":chart:",
-    layout="wide",  # Use "wide" layout for a full-size dashboard
+    layout="wide",  
 )
 
 st.header('Analisis Sentimen Tokoh Publik Purbaya di Media Sosial X')
@@ -60,7 +60,10 @@ with nav2:
 # filter Tgl
 output = (df['date'] >= start_date) & (df['date'] <= end_date)
 
-# filter sumber, tamggal dan sentiment
+# filter sentiment
+df_selection1 = df.loc[output]
+
+# filter sentiment
 df_selection = df.query("Label == @jenis_sentimen").loc[output]
 
 # Insert containers separated into tabs:
@@ -169,9 +172,9 @@ with tab1:
             st.rerun()
             
 with tab2:
-    pos = df_selection['Label'].loc[df_selection['Label'] == 'Positive']
-    neg = df_selection['Label'].loc[df_selection['Label'] == 'Negative']
-    count = len(df_selection)
+    pos = df_selection1['Label'].loc[df_selection1['Label'] == 'Positive']
+    neg = df_selection1['Label'].loc[df_selection1['Label'] == 'Negative']
+    count = len(df_selection1)
     
     b1, b2, b3 = st.columns([0.45,0.45,0.45])
     b1.metric("", len(pos), "+ Positive")
@@ -184,7 +187,7 @@ with tab2:
 nav3, nav4 = st.columns(2)
 with nav3:
     # Visualisasi hasil sentiment
-    sentiment_counts = df_selection['Label'].value_counts()
+    sentiment_counts = df_selection1['Label'].value_counts()
 
     color_map = {
         "Positive": "#2E7D32",  # deep green
@@ -228,7 +231,7 @@ with nav3:
     st.plotly_chart(fig_sentiment, use_container_width=True)
 
 with nav4:
-    tgl_counts = df_selection['date'].value_counts().reset_index()
+    tgl_counts = df_selection1['date'].value_counts().reset_index()
     tgl_counts.columns = ['date', 'Count']
     
     # Urutkan berdasarkan tanggal (PENTING supaya tidak acak)
