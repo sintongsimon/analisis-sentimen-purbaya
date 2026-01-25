@@ -71,7 +71,7 @@ if "page" not in st.session_state:
 
 with tab1:
     rows_per_page = 10
-    total_rows = len(df_filtered)
+    total_rows = len(df_selection)
     total_pages = max(1, (total_rows + rows_per_page - 1) // rows_per_page)
     
     col0, col1, col2, col3, col4, col5 = st.columns([1,1,1,2,1,1])
@@ -101,7 +101,7 @@ with tab1:
     start_idx = (st.session_state.page - 1) * rows_per_page
     end_idx = start_idx + rows_per_page
 
-    df_page = df_filtered.iloc[start_idx:end_idx].copy()
+    df_page = df_selection.iloc[start_idx:end_idx].copy()
 
     # Reset index agar mulai dari 1 sesuai halaman
     df_page.reset_index(drop=True, inplace=True)
