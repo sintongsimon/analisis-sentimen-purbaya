@@ -76,7 +76,12 @@ with tab1:
     
     col0, col1, col2, col3, col4, col5 = st.columns([1,1,1,2,1,1])
     with col0:
-        rows_per_page = st.selectbox("Baris per halaman", [5, 10, 25, 50], index=1)
+        rows_per_page = st.selectbox(
+            "Rows per page",
+            [5, 10, 25, 50],
+            index=1,
+            label_visibility="collapsed"
+        )
     with col1:
         if st.button("⏮ First"):
             st.session_state.page = 1
