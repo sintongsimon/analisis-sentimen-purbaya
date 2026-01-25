@@ -100,7 +100,7 @@ with tab1:
         height=400
     )
 
-    col0, col1a, col1b, col2a, col2b, col3, col4, col5, col6, col7 = st.columns([2,1,1,0.5,1,0.8,0.8,1.5,0.8,0.8])
+    col0, col1a, col1b, col2a, col2b, col3, col4, col5, col6, col7 = st.columns([2,1,0.5,0.5,0.5,0.8,0.8,1.5,0.8,0.8])
     with col0:
         st.markdown(f"**Display {start_idx + 1}–{min(end_idx, total_rows)} of {total_rows} data**")
     with col1a:
