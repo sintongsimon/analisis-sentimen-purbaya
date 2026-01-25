@@ -147,7 +147,7 @@ with tab1:
             label_visibility="collapsed"
         )
     with col3:
-        if st.button("⏮"):
+        if st.button("⏮", disabled=page == 1):
             st.session_state.nav_action = "first"
             st.rerun()
     with col4:
@@ -164,7 +164,7 @@ with tab1:
             st.session_state.nav_action = "next"
             st.rerun()
     with col7:
-        if st.button("⏭"):
+        if st.button("⏭", disabled=page == total_pages):
             st.session_state.nav_action = "last"
             st.rerun()
             
