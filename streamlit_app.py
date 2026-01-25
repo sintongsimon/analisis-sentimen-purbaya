@@ -137,11 +137,12 @@ with tab1:
     start_idx = (st.session_state.page - 1) * rows_per_page
     end_idx = start_idx + rows_per_page
 
-    df_page = df_filtered.iloc[start_idx:end_idx]
+    df_page = df_filtered.iloc[start_idx:end_idx].copy()
 
-    # =============================
-    # TABLE DISPLAY
-    # =============================
+    # Reset index agar mulai dari 1 sesuai halaman
+    df_page.reset_index(drop=True, inplace=True)
+    df_page.index = df_page.index + start_idx + 1
+    
     st.dataframe(
         df_page,
         use_container_width=True,
