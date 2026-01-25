@@ -74,7 +74,7 @@ with tab1:
     total_rows = len(df_selection)
     total_pages = max(1, (total_rows + rows_per_page - 1) // rows_per_page)
     
-    col0, col1, col2, col3, col4, col5 = st.columns([1,1,1,1,1,1,1])
+    col0, col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,1,1,1])
     with col0:
         st.markdown("**Rows per page**")
     with col1:
