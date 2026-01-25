@@ -72,24 +72,27 @@ if "page" not in st.session_state:
 if "rows_per_page" not in st.session_state:
     st.session_state.rows_per_page = 10
 
+if "last_rows_per_page" not in st.session_state:
+    st.session_state.last_rows_per_page = st.session_state.rows_per_page
+
+if st.session_state.rows_per_page != st.session_state.last_rows_per_page:
+    st.session_state.page = 1
+    st.session_state.last_rows_per_page = st.session_state.rows_per_page
+
+
 with tab1:
     rows_per_page = st.session_state.rows_per_page
+    page = st.session_state.page
+    
     total_rows = len(df_selection)
     total_pages = max(1, (total_rows + rows_per_page - 1) // rows_per_page)
     
-    start_idx = (st.session_state.page - 1) * rows_per_page
+    start_idx = (page - 1) * rows_per_page
     end_idx = start_idx + rows_per_page
     
-    # =============================
-    # SLICE DATA
-    # =============================
-    start_idx = (st.session_state.page - 1) * rows_per_page
-    end_idx = start_idx + rows_per_page
-
     df_page = df_selection.iloc[start_idx:end_idx].copy()
     df_page.reset_index(drop=True, inplace=True)
     df_page.index = df_page.index + start_idx + 1
-
     
     st.dataframe(
         df_page,
@@ -103,16 +106,11 @@ with tab1:
     with col1:
         st.markdown("**Rows per page**")
     with col2:
-        new_rows = st.selectbox(
-            "",
+        st.selectbox(
+            "Rows per page",
             [5, 10, 25, 50],
-            index=[5,10,25,50].index(st.session_state.rows_per_page),
-            label_visibility="collapsed"
+            key="rows_per_page"
         )
-    
-        if new_rows != st.session_state.rows_per_page:
-            st.session_state.rows_per_page = new_rows
-            st.session_state.page = 1  # RESET page
     with col3:
         if st.button("⏮ First"):
             st.session_state.page = 1
