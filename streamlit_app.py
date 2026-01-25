@@ -73,9 +73,12 @@ if "rows_per_page" not in st.session_state:
     st.session_state.rows_per_page = 10
 
 with tab1:
-    rows_per_page = 10
+    rows_per_page = st.session_state.rows_per_page
     total_rows = len(df_selection)
     total_pages = max(1, (total_rows + rows_per_page - 1) // rows_per_page)
+    
+    start_idx = (st.session_state.page - 1) * rows_per_page
+    end_idx = start_idx + rows_per_page
     
     # =============================
     # SLICE DATA
@@ -84,10 +87,9 @@ with tab1:
     end_idx = start_idx + rows_per_page
 
     df_page = df_selection.iloc[start_idx:end_idx].copy()
-
-    # Reset index agar mulai dari 1 sesuai halaman
     df_page.reset_index(drop=True, inplace=True)
     df_page.index = df_page.index + start_idx + 1
+
     
     st.dataframe(
         df_page,
