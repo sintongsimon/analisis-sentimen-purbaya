@@ -100,16 +100,25 @@ with tab1:
         height=400
     )
 
-    col0, col1, col2, col3, col4, col5, col6, col7 = st.columns([2,1,1,1,1,2,1,1])
+    col0, col1a, col1b, col2a, col2b, col3, col4, col5, col6, col7 = st.columns([2,1,1,1,1,1,1,2,1,1])
     with col0:
         st.markdown(f"**Display {start_idx + 1}–{min(end_idx, total_rows)} of {total_rows} data**")
-    with col1:
+    with col1a:
         st.markdown("**Rows per page**")
-    with col2:
+    with col1b:
         st.selectbox(
             "",
             [5, 10, 25, 50],
             key="rows_per_page",
+            label_visibility="collapsed"
+        )
+    with col2a:
+        st.markdown("**page**")
+    with col2b:
+        st.selectbox(
+            "",
+            options=list(range(1, total_pages + 1)),
+            key="page",
             label_visibility="collapsed"
         )
     with col3:
