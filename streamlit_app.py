@@ -87,6 +87,7 @@ with tab1:
     rows_per_page = st.session_state.rows_per_page
     total_rows = len(df_selection)
     total_pages = max(1, (total_rows + rows_per_page - 1))
+    st.markdown(f"**Total Pages{total_pages}**")
 
     if st.session_state.nav_action == "first":
         st.session_state.page = 1
