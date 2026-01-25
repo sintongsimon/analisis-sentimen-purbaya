@@ -66,7 +66,37 @@ df_selection = df.query("Label == @jenis_sentimen").loc[output]
 # Insert containers separated into tabs:
 tab1, tab2 = st.tabs(["Data", "Summary"])
 with tab1:
-    df_selection
+    st.subheader("Data Tweet")
+
+    # Pagination settings
+    rows_per_page = 10
+    total_rows = df_selection.shape[0]
+    total_pages = (total_rows // rows_per_page) + (1 if total_rows % rows_per_page > 0 else 0)
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        page = st.number_input(
+            "Halaman",
+            min_value=1,
+            max_value=total_pages,
+            value=1,
+            step=1
+        )
+
+    start_idx = (page - 1) * rows_per_page
+    end_idx = start_idx + rows_per_page
+
+    df_page = df_selection.iloc[start_idx:end_idx]
+
+    st.dataframe(
+        df_page,
+        use_container_width=True,
+        height=420
+    )
+
+    st.caption(
+        f"Menampilkan baris {start_idx + 1}–{min(end_idx, total_rows)} dari {total_rows} data"
+    )
 with tab2:
     pos = df_selection['Label'].loc[df_selection['Label'] == 'Positive']
     neg = df_selection['Label'].loc[df_selection['Label'] == 'Negative']
