@@ -65,36 +65,93 @@ df_selection = df.query("Label == @jenis_sentimen").loc[output]
 
 # Insert containers separated into tabs:
 tab1, tab2 = st.tabs(["Data", "Summary"])
+
+if "page" not in st.session_state:
+    st.session_state.page = 1
+
 with tab1:
-    # Pagination settings
-    rows_per_page = 10
-    total_rows = df_selection.shape[0]
-    total_pages = (total_rows // rows_per_page) + (1 if total_rows % rows_per_page > 0 else 0)
-    page = 1
+    with tab1:
+    st.subheader("📄 Data Tweet")
 
-    start_idx = (page - 1) * rows_per_page
+    # =============================
+    # SEARCH
+    # =============================
+    search_query = st.text_input("🔍 Cari (teks / label / tanggal)", "")
+
+    if search_query:
+        df_filtered = df_selection[
+            df_selection.astype(str)
+            .apply(lambda row: row.str.contains(search_query, case=False).any(), axis=1)
+        ]
+    else:
+        df_filtered = df_selection.copy()
+
+    # =============================
+    # SORTING
+    # =============================
+    sort_col = st.selectbox("Urutkan berdasarkan", df_filtered.columns)
+    sort_order = st.radio("Urutan", ["Ascending", "Descending"], horizontal=True)
+
+    df_filtered = df_filtered.sort_values(
+        by=sort_col,
+        ascending=(sort_order == "Ascending")
+    )
+
+    # =============================
+    # ROWS PER PAGE
+    # =============================
+    rows_per_page = st.selectbox("Baris per halaman", [5, 10, 25, 50], index=1)
+
+    total_rows = len(df_filtered)
+    total_pages = max(1, (total_rows + rows_per_page - 1) // rows_per_page)
+
+    # =============================
+    # PAGINATION CONTROLS
+    # =============================
+    col1, col2, col3, col4, col5 = st.columns([1,1,2,1,1])
+
+    with col1:
+        if st.button("⏮ First"):
+            st.session_state.page = 1
+
+    with col2:
+        if st.button("◀ Prev") and st.session_state.page > 1:
+            st.session_state.page -= 1
+
+    with col3:
+        st.markdown(
+            f"<h5 style='text-align:center'>Page {st.session_state.page} of {total_pages}</h5>",
+            unsafe_allow_html=True
+        )
+
+    with col4:
+        if st.button("Next ▶") and st.session_state.page < total_pages:
+            st.session_state.page += 1
+
+    with col5:
+        if st.button("Last ⏭"):
+            st.session_state.page = total_pages
+
+    # =============================
+    # SLICE DATA
+    # =============================
+    start_idx = (st.session_state.page - 1) * rows_per_page
     end_idx = start_idx + rows_per_page
-    df_page = df_selection.iloc[start_idx:end_idx]
 
+    df_page = df_filtered.iloc[start_idx:end_idx]
+
+    # =============================
+    # TABLE DISPLAY
+    # =============================
     st.dataframe(
         df_page,
         use_container_width=True,
-        height=400
+        height=420
     )
 
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col1:
-        st.caption(
-            f"Displays rows {start_idx + 1}–{min(end_idx, total_rows)} from {total_rows} data"
-        )
-    with col2:
-        page = st.number_input(
-            "Page",
-            min_value=1,
-            max_value=total_pages,
-            value=1,
-            step=1
-        )
+    st.caption(
+        f"Menampilkan {start_idx + 1}–{min(end_idx, total_rows)} dari {total_rows} data"
+    )    
 with tab2:
     pos = df_selection['Label'].loc[df_selection['Label'] == 'Positive']
     neg = df_selection['Label'].loc[df_selection['Label'] == 'Negative']
