@@ -73,7 +73,7 @@ with tab1:
 
     start_idx = (page - 1) * rows_per_page
     end_idx = start_idx + rows_per_page
-
+    page = 1
     df_page = df_selection.iloc[start_idx:end_idx]
 
     st.dataframe(
@@ -89,7 +89,7 @@ with tab1:
         )
     with col2:
         page = st.number_input(
-            "Halaman",
+            "Page",
             min_value=1,
             max_value=total_pages,
             value=1,
