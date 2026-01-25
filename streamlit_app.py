@@ -148,7 +148,7 @@ with tab1:
             st.session_state.nav_action = "first"
             st.rerun()
     with col4:
-        if st.button("◀ Prev"):
+        if st.button("◀"):
             st.session_state.nav_action = "prev"
             st.rerun()
     with col5:
@@ -157,11 +157,11 @@ with tab1:
             unsafe_allow_html=True
         )
     with col6:
-        if st.button("Next ▶"):
+        if st.button("▶"):
             st.session_state.nav_action = "next"
             st.rerun()
     with col7:
-        if st.button("Last ⏭"):
+        if st.button("⏭"):
             st.session_state.nav_action = "last"
             st.rerun()
             
