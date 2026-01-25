@@ -171,6 +171,7 @@ with tab1:
             st.session_state.nav_action = "last"
             st.rerun()
             
+    st.markdown("""---""")
 with tab2:
     pos = df_selection1['Label'].loc[df_selection1['Label'] == 'Positive']
     neg = df_selection1['Label'].loc[df_selection1['Label'] == 'Negative']
