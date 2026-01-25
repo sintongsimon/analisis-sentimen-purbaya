@@ -84,33 +84,29 @@ if st.session_state.rows_per_page != st.session_state.last_rows_per_page:
     st.rerun()
 
 with tab1:
-    # rows_per_page = st.session_state.rows_per_page
+    rows_per_page = st.session_state.rows_per_page
     total_rows = len(df_selection)
-    total_pages = max(1, (total_rows + st.session_state.rows_per_page - 1))
+    total_pages = max(1, (total_rows + rows_per_page - 1))
 
     if st.session_state.nav_action == "first":
         st.session_state.page = 1
-    
     elif st.session_state.nav_action == "prev":
         st.session_state.page = max(1, st.session_state.page - 1)
-    
     elif st.session_state.nav_action == "next":
         st.session_state.page = min(total_pages, st.session_state.page + 1)
-    
     elif st.session_state.nav_action == "last":
         st.session_state.page = total_pages
     
     st.session_state.nav_action = None  # reset
     
+    st.session_state.page = max(1, min(st.session_state.page, total_pages))
     page = st.session_state.page  # ✅ re-read AFTER update
-
-    st.session_state.page = min(st.session_state.page, total_pages)
 
     if st.session_state.page > total_pages:
         st.session_state.page = total_pages
         
-    start_idx = (page - 1) * st.session_state.rows_per_page
-    end_idx = start_idx + st.session_state.rows_per_page
+    start_idx = (page - 1) * rows_per_page
+    end_idx = min(start_idx + rows_per_page, total_rows)
     
     df_page = df_selection.iloc[start_idx:end_idx].copy()
     df_page.reset_index(drop=True, inplace=True)
@@ -155,7 +151,7 @@ with tab1:
             st.session_state.nav_action = "first"
             st.rerun()
     with col4:
-        if st.button("◀"):
+        if st.button("◀", disabled=page == 1):
             st.session_state.nav_action = "prev"
             st.rerun()
     with col5:
@@ -164,7 +160,7 @@ with tab1:
             unsafe_allow_html=True
         )
     with col6:
-        if st.button("▶"):
+        if st.button("▶", disabled=page == total_pages):
             st.session_state.nav_action = "next"
             st.rerun()
     with col7:
