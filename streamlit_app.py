@@ -70,7 +70,6 @@ if "page" not in st.session_state:
     st.session_state.page = 1
 
 with tab1:
-    with tab1:
     st.subheader("📄 Data Tweet")
 
     # =============================
