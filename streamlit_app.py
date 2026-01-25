@@ -72,6 +72,9 @@ if "page" not in st.session_state:
 if "rows_per_page" not in st.session_state:
     st.session_state.rows_per_page = 10
 
+if "nav_action" not in st.session_state:
+    st.session_state.nav_action = None
+    
 if "last_rows_per_page" not in st.session_state:
     st.session_state.last_rows_per_page = st.session_state.rows_per_page
 
@@ -81,12 +84,27 @@ if st.session_state.rows_per_page != st.session_state.last_rows_per_page:
     st.rerun()
 
 with tab1:
-    rows_per_page = st.session_state.rows_per_page
     page = st.session_state.page
-    
+    rows_per_page = st.session_state.rows_per_page
     total_rows = len(df_selection)
     total_pages = max(1, (total_rows + rows_per_page - 1) // rows_per_page)
+
+    if st.session_state.nav_action == "first":
+        st.session_state.page = 1
     
+    elif st.session_state.nav_action == "prev":
+        st.session_state.page = max(1, st.session_state.page - 1)
+    
+    elif st.session_state.nav_action == "next":
+        st.session_state.page = min(total_pages, st.session_state.page + 1)
+    
+    elif st.session_state.nav_action == "last":
+        st.session_state.page = total_pages
+    
+    st.session_state.nav_action = None  # reset
+
+    st.session_state.page = min(st.session_state.page, total_pages)
+
     if st.session_state.page > total_pages:
         st.session_state.page = total_pages
         
@@ -126,21 +144,26 @@ with tab1:
         )
     with col3:
         if st.button("⏮"):
-            st.session_state.page = 1
+            st.session_state.nav_action = "first"
+            st.rerun()
     with col4:
-        if st.button("◀") and st.session_state.page > 1:
-            st.session_state.page -= 1
+        if st.button("◀ Prev"):
+            st.session_state.nav_action = "prev"
+            st.rerun()
     with col5:
         st.markdown(
             f"<h5 style='text-align:center'>Page {st.session_state.page} of {total_pages}</h5>",
             unsafe_allow_html=True
         )
     with col6:
-        if st.button("▶") and st.session_state.page < total_pages:
-            st.session_state.page += 1
+        if st.button("Next ▶"):
+            st.session_state.nav_action = "next"
+            st.rerun()
     with col7:
-        if st.button("⏭"):
-            st.session_state.page = total_pages
+        if st.button("Last ⏭"):
+            st.session_state.nav_action = "last"
+            st.rerun()
+            
 with tab2:
     pos = df_selection['Label'].loc[df_selection['Label'] == 'Positive']
     neg = df_selection['Label'].loc[df_selection['Label'] == 'Negative']
