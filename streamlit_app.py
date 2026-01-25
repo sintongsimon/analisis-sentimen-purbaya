@@ -128,12 +128,19 @@ with tab1:
     with col1a:
         st.markdown("**Rows per page**")
     with col1b:
-        st.selectbox(
+        new_rows_per_page = st.selectbox(
             "",
             [5, 10, 25, 50],
-            key="rows_per_page",
+            index=[5, 10, 25, 50].index(st.session_state.rows_per_page),
+            key="rows_per_page_select",
             label_visibility="collapsed"
         )
+        
+        if new_rows_per_page != st.session_state.rows_per_page:
+            st.session_state.rows_per_page = new_rows_per_page
+            st.session_state.page = 1
+            st.rerun()
+
     with col2a:
         st.markdown("**Page**")
     with col2b:
