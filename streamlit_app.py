@@ -70,11 +70,11 @@ if "page" not in st.session_state:
     st.session_state.page = 1
 
 with tab1:
-
+    rows_per_page = 10
     total_rows = len(df_filtered)
     total_pages = max(1, (total_rows + rows_per_page - 1) // rows_per_page)
     
-    col0, col1, col2, col3, col4, col5 = st.columns([1, 1,1,2,1,1])
+    col0, col1, col2, col3, col4, col5 = st.columns([1,1,1,2,1,1])
     with col0:
         rows_per_page = st.selectbox("Baris per halaman", [5, 10, 25, 50], index=1)
     with col1:
