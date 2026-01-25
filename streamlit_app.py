@@ -74,29 +74,31 @@ with tab1:
     total_rows = len(df_selection)
     total_pages = max(1, (total_rows + rows_per_page - 1) // rows_per_page)
     
-    col0, col1, col2, col3, col4, col5 = st.columns([1,1,1,2,1,1])
+    col0, col1, col2, col3, col4, col5 = st.columns([1,1,1,1,1,1,1])
     with col0:
+        st.markdown("**Rows per page**")
+    with col1:
         rows_per_page = st.selectbox(
             "Rows per page",
             [5, 10, 25, 50],
             index=1,
             label_visibility="collapsed"
         )
-    with col1:
+    with col2:
         if st.button("⏮ First"):
             st.session_state.page = 1
-    with col2:
+    with col3:
         if st.button("◀ Prev") and st.session_state.page > 1:
             st.session_state.page -= 1
-    with col3:
+    with col4:
         st.markdown(
             f"<h5 style='text-align:center'>Page {st.session_state.page} of {total_pages}</h5>",
             unsafe_allow_html=True
         )
-    with col4:
+    with col5:
         if st.button("Next ▶") and st.session_state.page < total_pages:
             st.session_state.page += 1
-    with col5:
+    with col6:
         if st.button("Last ⏭"):
             st.session_state.page = total_pages
 
