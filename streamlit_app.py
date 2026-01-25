@@ -109,8 +109,8 @@ with tab1:
     if st.session_state.page > total_pages:
         st.session_state.page = total_pages
         
-    start_idx = (page - 1) * rows_per_page
-    end_idx = start_idx + rows_per_page
+    start_idx = (page - 1) * st.session_state.rows_per_page
+    end_idx = start_idx + st.session_state.rows_per_page
     
     df_page = df_selection.iloc[start_idx:end_idx].copy()
     df_page.reset_index(drop=True, inplace=True)
