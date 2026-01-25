@@ -78,7 +78,7 @@ if "last_rows_per_page" not in st.session_state:
 if st.session_state.rows_per_page != st.session_state.last_rows_per_page:
     st.session_state.page = 1
     st.session_state.last_rows_per_page = st.session_state.rows_per_page
-
+    st.rerun()
 
 with tab1:
     rows_per_page = st.session_state.rows_per_page
@@ -87,6 +87,9 @@ with tab1:
     total_rows = len(df_selection)
     total_pages = max(1, (total_rows + rows_per_page - 1) // rows_per_page)
     
+    if st.session_state.page > total_pages:
+        st.session_state.page = total_pages
+        
     start_idx = (page - 1) * rows_per_page
     end_idx = start_idx + rows_per_page
     
