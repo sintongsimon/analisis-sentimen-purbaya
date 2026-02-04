@@ -33,7 +33,7 @@ st.set_page_config(
 st.header('Analisis Sentimen Tokoh Publik Purbaya di Media Sosial X')
 st.markdown("""---""")
 
-data = pd.read_excel('labeled_tweets_merged_2025-09-08_to_2025-12-30.xlsx')
+data = pd.read_excel('labeled_tweets_2025-09-08_to_2025-12-30.xlsx')
 
 # mengubah nilai kolom dan menghapus sentimen yang kosong
 mapping = {1: 'Positive', 2: 'Negative'}
