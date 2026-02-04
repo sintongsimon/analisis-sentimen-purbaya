@@ -339,23 +339,25 @@ def print_metrics(y_test, y_pred, fold, title_suffix):
     # plt.title(f"Confusion Matrix - Fold {fold_choice}")
     # st.pyplot(plt)
 
-    fig, ax = plt.subplots(figsize=(4, 3), dpi=120)
-    sns.heatmap(
-        cm,
-        annot=True,
-        fmt="d",
-        cmap="Blues",
-        xticklabels=["Negative", "Positive"],
-        yticklabels=["Negative", "Positive"],
-        cbar=False,
-        ax=ax
-    )
+    col_left, col_center, col_right = st.columns([1, 2, 1])
+    with col_center:
+        fig, ax = plt.subplots(figsize=(3, 2), dpi=100)
+        sns.heatmap(
+            cm,
+            annot=True,
+            fmt="d",
+            cmap="Blues",
+            xticklabels=["Negative", "Positive"],
+            yticklabels=["Negative", "Positive"],
+            cbar=False,
+            ax=ax
+        )
     
-    ax.set_xlabel("Predicted Label")
-    ax.set_ylabel("True Label")
-    ax.set_title(f"Confusion Matrix - Fold {fold_choice}", fontsize=9)
+        ax.set_xlabel("Predicted Label")
+        ax.set_ylabel("True Label")
+        ax.set_title(f"Confusion Matrix - Fold {fold_choice}", fontsize=9)
     
-    st.pyplot(fig, use_container_width=False)
+        st.pyplot(fig, use_container_width=False)
 
 # Tabs for TF, TF-IDF, IndoBERTweet
 # tab1, tab2, tab3 = st.tabs(["TF", "TF-IDF", "IndoBERTweet"])
