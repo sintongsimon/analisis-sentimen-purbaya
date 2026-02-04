@@ -325,7 +325,7 @@ def print_metrics(y_test, y_pred, fold, title_suffix):
     #    fig.update_layout(yaxis_range=[0,1])
     #    st.plotly_chart(fig, use_container_width=True)
 
-    plt.figure(figsize=(3, 2))
+    plt.subplots(figsize=(4, 3), dpi=120)
     sns.heatmap(
         cm,
         annot=True,
