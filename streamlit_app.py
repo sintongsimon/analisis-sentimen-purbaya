@@ -54,6 +54,13 @@ with nav1:
     start = df['Date'].min()
     finish = df['Date'].max()
     start_date, end_date = st.date_input('Range Time', (start, finish), start, finish, format="DD/MM/YYYY")
+    
+    if isinstance(date_range, tuple) and len(date_range) == 2:
+        start_date, end_date = date_range
+    else:
+        start_date = start
+        end_date = finish
+    
 with nav2:
     jenis_sentimen = st.multiselect("Category", options = df["Label"].unique(), default = df["Label"].unique())
 
