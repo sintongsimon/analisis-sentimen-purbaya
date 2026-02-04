@@ -325,19 +325,37 @@ def print_metrics(y_test, y_pred, fold, title_suffix):
     #    fig.update_layout(yaxis_range=[0,1])
     #    st.plotly_chart(fig, use_container_width=True)
 
-    plt.subplots(figsize=(4, 3), dpi=120)
+    # plt.subplots(figsize=(4, 3), dpi=120)
+    # sns.heatmap(
+    #     cm,
+    #     annot=True,
+    #     fmt="d",
+    #     cmap="Blues",
+    #     xticklabels=["Negative", "Positive"],
+    #     yticklabels=["Negative", "Positive"]
+    # )
+    # plt.xlabel("Predicted Label")
+    # plt.ylabel("True Label")
+    # plt.title(f"Confusion Matrix - Fold {fold_choice}")
+    # st.pyplot(plt)
+
+    fig, ax = plt.subplots(figsize=(3, 2), dpi=100)
     sns.heatmap(
         cm,
         annot=True,
         fmt="d",
         cmap="Blues",
         xticklabels=["Negative", "Positive"],
-        yticklabels=["Negative", "Positive"]
+        yticklabels=["Negative", "Positive"],
+        cbar=False,
+        ax=ax
     )
-    plt.xlabel("Predicted Label")
-    plt.ylabel("True Label")
-    plt.title(f"Confusion Matrix - Fold {fold_choice}")
-    st.pyplot(plt)
+    
+    ax.set_xlabel("Predicted Label")
+    ax.set_ylabel("True Label")
+    ax.set_title(f"Confusion Matrix - Fold {fold_choice}", fontsize=9)
+    
+    st.pyplot(fig, use_container_width=False)
 
 # Tabs for TF, TF-IDF, IndoBERTweet
 # tab1, tab2, tab3 = st.tabs(["TF", "TF-IDF", "IndoBERTweet"])
