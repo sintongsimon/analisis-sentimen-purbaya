@@ -384,9 +384,17 @@ with tab3:
     y_test = df_fold["y_true"]
     y_pred = df_fold["y_pred"]
 
+    # Value Positif Negatif Terbalik
+    label_map_fix = {
+        0: 1,
+        1: 0
+    }
+    y_test_fixed = y_test.map(label_map_fix)
+    y_pred_fixed = y_pred.map(label_map_fix)
+    
     print_metrics(
-        y_test,
-        y_pred,
+        y_test_fixed,
+        y_pred_fixed,
         fold_choice,
         "IndoBERTweet"
     )
