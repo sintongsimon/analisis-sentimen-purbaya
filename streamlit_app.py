@@ -339,7 +339,7 @@ def print_metrics(y_test, y_pred, fold, title_suffix):
     # plt.title(f"Confusion Matrix - Fold {fold_choice}")
     # st.pyplot(plt)
 
-    fig, ax = plt.subplots(figsize=(3, 2), dpi=160)
+    fig, ax = plt.subplots(figsize=(4, 3), dpi=120)
     sns.heatmap(
         cm,
         annot=True,
