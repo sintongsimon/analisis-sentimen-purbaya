@@ -340,23 +340,24 @@ def print_metrics(y_test, y_pred, fold, title_suffix):
     st.pyplot(plt)
 
 # Tabs for TF, TF-IDF, IndoBERTweet
-tab1, tab2, tab3 = st.tabs(["TF", "TF-IDF", "IndoBERTweet"])
+# tab1, tab2, tab3 = st.tabs(["TF", "TF-IDF", "IndoBERTweet"])
+tab2, tab3 = st.tabs(["SVM (TF-IDF)", "IndoBERTweet"])
 
-with tab1:
-    countVectorizer = CountVectorizer()
-    tf = countVectorizer.fit_transform(X).toarray()
+# with tab1:
+#     countVectorizer = CountVectorizer()
+#     tf = countVectorizer.fit_transform(X).toarray()
 
-    fold_choice = st.selectbox("Pilih K-fold TF", [1, 2, 3, 4, 5])
+#     fold_choice = st.selectbox("Pilih K-fold TF", [1, 2, 3, 4, 5])
     
-    fold = fold_choice
-    train_index, test_index = splits[fold - 1]
-    X_train, X_test = tf[train_index], tf[test_index]
-    y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+#     fold = fold_choice
+#     train_index, test_index = splits[fold - 1]
+#     X_train, X_test = tf[train_index], tf[test_index]
+#     y_train, y_test = y.iloc[train_index], y.iloc[test_index]
 
-    model.fit(X_train, y_train)
-    y_pred = model.predict(X_test)
+#     model.fit(X_train, y_train)
+#     y_pred = model.predict(X_test)
 
-    print_metrics(y_test, y_pred, fold, "Count Vectorizer (TF)")
+#     print_metrics(y_test, y_pred, fold, "Count Vectorizer (TF)")
 
 with tab2:
     tfidfVectorizer = TfidfVectorizer(use_idf=True, smooth_idf=True)
