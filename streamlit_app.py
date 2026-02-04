@@ -33,7 +33,7 @@ st.set_page_config(
 st.header('Analisis Sentimen Tokoh Publik Purbaya di Media Sosial X')
 st.markdown("""---""")
 
-data = pd.read_excel('labeled_tweets_merged_2025-09-08_to_2025-12-31.xlsx')
+data = pd.read_excel('labeled_tweets_merged_2025-09-08_to_2025-12-30.xlsx')
 
 # mengubah nilai kolom dan menghapus sentimen yang kosong
 mapping = {1: 'Positive', 2: 'Negative'}
@@ -50,15 +50,15 @@ df = df.drop_duplicates(subset=['CleanSVM'])
 
 nav1, nav2 = st.columns(2)
 with nav1:
-    df['date'] = pd.to_datetime(df['date']).dt.date
-    start = df['date'].min()
-    finish = df['date'].max()
+    df['Date'] = pd.to_datetime(df['Date']).dt.date
+    start = df['Date'].min()
+    finish = df['Date'].max()
     start_date, end_date = st.date_input('Range Time', (start, finish), start, finish, format="DD/MM/YYYY")
 with nav2:
     jenis_sentimen = st.multiselect("Category", options = df["Label"].unique(), default = df["Label"].unique())
 
 # filter Tgl
-output = (df['date'] >= start_date) & (df['date'] <= end_date)
+output = (df['Date'] >= start_date) & (df['Date'] <= end_date)
 
 # filter sentiment
 df_selection1 = df.loc[output]
@@ -232,18 +232,18 @@ with nav3:
     st.plotly_chart(fig_sentiment, use_container_width=True)
 
 with nav4:
-    tgl_counts = df_selection1['date'].value_counts().reset_index()
-    tgl_counts.columns = ['date', 'Count']
+    tgl_counts = df_selection1['Date'].value_counts().reset_index()
+    tgl_counts.columns = ['Date', 'Count']
     
     # Urutkan berdasarkan tanggal (PENTING supaya tidak acak)
-    tgl_counts['date'] = pd.to_datetime(tgl_counts['date'])
-    tgl_counts = tgl_counts.sort_values('date')
+    tgl_counts['Date'] = pd.to_datetime(tgl_counts['Date'])
+    tgl_counts = tgl_counts.sort_values('Date')
     
     custom_colors = ['#1E88E5']  # professional blue
     
     fig_tgl = px.bar(
         tgl_counts,
-        x='date',
+        x='Date',
         y='Count',
         title="Tweet Range",
         color_discrete_sequence=custom_colors
