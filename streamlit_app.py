@@ -53,7 +53,14 @@ with nav1:
     df['Date'] = pd.to_datetime(df['Date']).dt.date
     start = df['Date'].min()
     finish = df['Date'].max()
-    start_date, end_date = st.date_input('Range Time', (start, finish), start, finish, format="DD/MM/YYYY")
+    
+    date_range = st.date_input(
+        'Range Time',
+        value=(start, finish),
+        min_value=start,
+        max_value=finish,
+        format="DD/MM/YYYY"
+    )
     
     if isinstance(date_range, tuple) and len(date_range) == 2:
         start_date, end_date = date_range
