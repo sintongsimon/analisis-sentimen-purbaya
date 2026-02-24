@@ -9,6 +9,7 @@ from sklearn.svm import LinearSVC
 from sklearn.model_selection import cross_val_score, KFold, train_test_split
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, precision_score, recall_score, f1_score
 import seaborn as sns
+from sklearn.model_selection import StratifiedKFold
 
 st.markdown("""
 <style>
@@ -285,10 +286,12 @@ X = df['CleanSVM']
 y = df['Label']
 
 # Define KFold cross-validation with fixed 5 splits
-kf = KFold(n_splits=5, shuffle=True, random_state=42)
+# kf = KFold(n_splits=5, shuffle=True, random_state=42)
+kf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
 # Model definition
-model = LinearSVC()
+# model = LinearSVC()
+model = LinearSVC(class_weight="balanced")
 
 # Splitting data once for all folds
 splits = list(kf.split(X))
