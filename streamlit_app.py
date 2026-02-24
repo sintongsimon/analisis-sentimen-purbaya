@@ -294,7 +294,7 @@ kf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 model = LinearSVC(class_weight="balanced")
 
 # Splitting data once for all folds
-splits = list(kf.split(X))
+splits = list(kf.split(X, y))
 
 # Function to print and plot metrics
 def print_metrics(y_test, y_pred, fold, title_suffix):
