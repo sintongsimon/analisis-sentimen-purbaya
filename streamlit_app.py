@@ -402,8 +402,8 @@ with tab3:
     fold_choice = st.selectbox("Pilih K-fold IndoBERTweet", [1, 2, 3, 4, 5])
 
     # Load hasil fold
-    file_path = f"results/indobertweet_fold_{fold_choice}_predictions.csv"
-    # file_path = f"results/indobertweet_fold_{fold_choice}_cw_predictions.csv"
+    # file_path = f"results/indobertweet_fold_{fold_choice}_predictions.csv"
+    file_path = f"results/indobertweet_fold_{fold_choice}_cw_predictions.csv"
     df_fold = pd.read_csv(file_path)
 
     y_test = df_fold["y_true"]
