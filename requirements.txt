@@ -2,9 +2,10 @@ streamlit
 pandas
 numpy
 scikit-learn
-sastrawi
-nltk
-wordcloud
-seaborn
-openpyxl
+matplotlib
 plotly
+seaborn
+wordcloud
+nltk
+sastrawi
+openpyxl
