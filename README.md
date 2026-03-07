@@ -1,8 +1,8 @@
-# Sentiment Analysis of Public Opinion on Purbaya on Social Media X
+# SENTIMENT ANALYSIS USING SVM AND INDOBERTWEET ON PUBLIC FIGURE PURBAYA ON SOCIAL MEDIA X
 
 This repository contains the dataset and source code used in the research:
 
-"Analisis Sentimen Opini Publik terhadap Tokoh Purbaya di Media Sosial X Menggunakan Support Vector Machine dan IndoBERTweet"
+"ANALISIS SENTIMEN MENGGUNAKAN METODE SVM DAN INDOBERTWEET TERHADAP TOKOH PUBLIK PURBAYA DI MEDIA SOSIAL X"
 
 ## Dataset
 
