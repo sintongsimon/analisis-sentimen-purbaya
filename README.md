@@ -40,4 +40,3 @@ https://sintongsimon.streamlit.app/
 - dataset : tweet datasets used in the research
 - scripts : data processing and model training scripts
 - results : evaluation results
-- app : Streamlit sentiment analysis application
